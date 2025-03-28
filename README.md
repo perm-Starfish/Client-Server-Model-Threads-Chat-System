@@ -89,9 +89,10 @@ For example, to connect as "Charlie":
 
 ## 📝 **Client Commands**
 
-Command	Description
-chat <username> "<message>"	Send a message to another user
-bye	Disconnect from the server
+| Command | Description |
+| :------ | :---------- |
+| `chat \<username\> "\<message\>"` | Send a message to another user |
+| `bye` | Disconnect from the server |
 
 ```sh
 (Alice connects)
