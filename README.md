@@ -2,8 +2,6 @@
 > **Operating Systems - Assignment 1**  
 > Implement a multi-client chat system using UNIX socket programming and Pthreads.  
 
-[![OS Project](https://img.shields.io/badge/Operating%20System-Networking-blue.svg)](https://github.com/)  
-[![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)  
 
 ## 📌 **Project Overview**
 This project implements a **multi-client chat system** using the **client-server model** with **UNIX sockets** and **Pthreads**. The server maintains user connections, message forwarding, and synchronization using a **shared whiteboard (memory space)**. Clients can send and receive messages in real-time.
@@ -11,12 +9,12 @@ This project implements a **multi-client chat system** using the **client-server
 ---
 
 ## 🌟 **Features**
-✅ Support **multiple clients** to connect to the server.  
-✅ **User login/logout notifications** for all online users.  
-✅ **Direct messaging** between clients via the server.  
-✅ **Shared whiteboard** for message exchange with synchronization (mutex).  
-✅ Implemented using **UNIX sockets (TCP) + Pthreads** for concurrent client handling.  
-✅ Simple command-line interface (CLI) for interaction.  
+- Support **multiple clients** to connect to the server.  
+- **User login/logout notifications** for all online users.  
+- **Direct messaging** between clients via the server.  
+- **Shared whiteboard** for message exchange with synchronization (mutex).  
+- Implemented using **UNIX sockets (TCP) + Pthreads** for concurrent client handling.  
+- Simple command-line interface (CLI) for interaction.  
 
 ---
 
@@ -123,3 +121,54 @@ $ bye
 │── README.md      # Project documentation
 │── LICENSE        # License file
 ```
+
+## 📌 **Implementation Details**
+- **Server Side**
+  - Uses **`socket()`** and **`bind()`** to create and listen for client connections.
+  - Spawns a **Pthread** for each client to handle requests.
+  - Uses a **shared memory (whiteboard)** for message exchange.
+  - Uses **mutex locks** to prevent race conditions.
+
+- **Client Side**
+  - Establishes a connection to the server using **`connect()`**.
+  - Reads and sends messages via **TCP sockets**.
+  - Listens for updates from the server.
+
+---
+
+## 🔥 **Demo Example**
+
+```pgsql
+Terminal 1 (Server):
+$ ./server
+[Server] Listening on port 1234...
+[Server] Alice connected (192.168.1.10)
+[Server] Bob connected (192.168.1.11)
+[Server] Message from Alice to Bob: "Hello Bob!"
+[Server] Bob disconnected.
+
+Terminal 2 (Alice - Client):
+$ ./client 127.0.0.1 1234 Alice
+<User Alice is online.>
+$ chat Bob "Hello Bob!"
+<To Bob> Hello Bob.
+
+Terminal 3 (Bob - Client):
+$ ./client 127.0.0.1 1234 Bob
+<User Bob is online.>
+(Alice sent a message)
+<Message from Alice: "Hello Bob!">
+$ bye
+<User Bob is offline.>
+```
+
+
+---
+
+## 🔧 **Troubleshooting**
+❓ *Port already in use?*  
+🔹 Run `netstat -tulnp | grep 1234` and kill the process using `kill -9 <PID>`.  
+
+❓ *Compilation error?*  
+🔹 Ensure you have `gcc` and required libraries installed (`sudo apt install build-essential`).  
+
