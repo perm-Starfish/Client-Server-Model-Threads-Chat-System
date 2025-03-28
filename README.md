@@ -24,7 +24,21 @@ This project implements a **multi-client chat system** using the **client-server
 The system follows a **client-server** architecture:
 
 ```
-+---------+ +---------+ +---------+ | Client1 | | Client2 | | Client3 | +----+----+ +----+----+ +----+----+ | | | | (TCP Socket) | (TCP Socket) | | | | v v v +---------------------------------------------+ | Chat Server | | - Manages user connections | | - Stores username & socket mappings | | - Handles message forwarding | | - Uses shared whiteboard & mutex | +---------------------------------------------+
+   +---------+       +---------+       +---------+
+   | Client1 |       | Client2 |       | Client3 |
+   +----+----+       +----+----+       +----+----+
+        |                  |                 |
+        |   (TCP Socket)   |   (TCP Socket)  |
+        |                  |                 |
+        v                  v                 v
+   +---------------------------------------------+
+   |               Chat Server                   |
+   |   - Manages user connections                |
+   |   - Stores username & socket mappings      |
+   |   - Handles message forwarding             |
+   |   - Uses shared whiteboard & mutex         |
+   +---------------------------------------------+
+
 ```
 
 ---
@@ -46,4 +60,31 @@ make
 
 This will generate two executable files:
 - server
-- - client
+- client
+
+### **2️⃣ Run the Server**
+Start the server using the following command:
+
+```sh
+./server
+```
+By default, the server runs on port 1234.
+
+### **3️⃣ Run Clients**
+Start multiple clients to connect to the server:
+
+```sh
+./client 127.0.0.1 1234 Alice
+./client 127.0.0.1 1234 Bob
+```
+Each client should specify:
+
+```sh
+./client <server_ip> <port> <username>
+```
+
+For example, to connect as "Charlie":
+
+```sh
+./client 192.168.1.100 1234 Charlie
+```
