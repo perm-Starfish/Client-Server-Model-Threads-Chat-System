@@ -170,8 +170,8 @@ $ bye
 
 ##  **Troubleshooting**
  *Port already in use?*  
- Run `netstat -tulnp | grep 1234` and kill the process using `kill -9 <PID>`.  
+ -> Run `netstat -tulnp | grep 1234` and kill the process using `kill -9 <PID>`.  
 
  *Compilation error?*  
- Ensure you have `gcc` and required libraries installed (`sudo apt install build-essential`).  
+ -> Ensure you have `gcc` and required libraries installed (`sudo apt install build-essential`).  
 
