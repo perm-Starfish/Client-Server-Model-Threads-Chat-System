@@ -32,9 +32,9 @@ The system follows a **client-server** architecture:
    +---------------------------------------------+
    |               Chat Server                   |
    |   - Manages user connections                |
-   |   - Stores username & socket mappings      |
-   |   - Handles message forwarding             |
-   |   - Uses shared whiteboard & mutex         |
+   |   - Stores username & socket mappings       |
+   |   - Handles message forwarding              |
+   |   - Uses shared whiteboard & mutex          |
    +---------------------------------------------+
 
 ```
