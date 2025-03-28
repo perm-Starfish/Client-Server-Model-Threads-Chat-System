@@ -3,12 +3,12 @@
 > Implement a multi-client chat system using UNIX socket programming and Pthreads.  
 
 
-## 📌 **Project Overview**
+##  **Project Overview**
 This project implements a **multi-client chat system** using the **client-server model** with **UNIX sockets** and **Pthreads**. The server maintains user connections, message forwarding, and synchronization using a **shared whiteboard (memory space)**. Clients can send and receive messages in real-time.
 
 ---
 
-## 🌟 **Features**
+##  **Features**
 - Support **multiple clients** to connect to the server.  
 - **User login/logout notifications** for all online users.  
 - **Direct messaging** between clients via the server.  
@@ -18,7 +18,7 @@ This project implements a **multi-client chat system** using the **client-server
 
 ---
 
-## 🛠 **System Architecture**
+##  **System Architecture**
 The system follows a **client-server** architecture:
 
 ```
@@ -41,14 +41,14 @@ The system follows a **client-server** architecture:
 
 ---
 
-## 💻 **Environment & Requirements**
+##  **Environment & Requirements**
 - **OS:** Linux / macOS (recommended), Windows (via WSL or MinGW)
 - **Compiler:** `gcc`
 - **Libraries:** `pthread`, `sys/socket.h`, `netinet/in.h`
 
 ---
 
-## 🚀 **Installation & Usage**
+##  **Installation & Usage**
 
 ### **1️⃣ Compile the Project**
 Use the provided `Makefile` to compile both the server and client programs:
@@ -87,12 +87,14 @@ For example, to connect as "Charlie":
 ./client 192.168.1.100 1234 Charlie
 ```
 
-## 📝 **Client Commands**
+##  **Client Commands**
 
 | Command | Description |
 | :------ | :---------- |
 | `chat \<username\> "\<message\>"` | Send a message to another user |
 | `bye` | Disconnect from the server |
+
+Example Conversation:
 
 ```sh
 (Alice connects)
@@ -112,7 +114,7 @@ $ bye
 <User Bob is offline.>
 ```
 
-## 🛠 **Code Structure**
+##  **Code Structure**
 
 ```bash
 /chat-system
@@ -123,7 +125,7 @@ $ bye
 │── LICENSE        # License file
 ```
 
-## 📌 **Implementation Details**
+##  **Implementation Details**
 - **Server Side**
   - Uses **`socket()`** and **`bind()`** to create and listen for client connections.
   - Spawns a **Pthread** for each client to handle requests.
@@ -137,7 +139,7 @@ $ bye
 
 ---
 
-## 🔥 **Demo Example**
+##  **Demo Example**
 
 ```pgsql
 Terminal 1 (Server):
@@ -166,10 +168,10 @@ $ bye
 
 ---
 
-## 🔧 **Troubleshooting**
-❓ *Port already in use?*  
-🔹 Run `netstat -tulnp | grep 1234` and kill the process using `kill -9 <PID>`.  
+##  **Troubleshooting**
+ *Port already in use?*  
+ Run `netstat -tulnp | grep 1234` and kill the process using `kill -9 <PID>`.  
 
-❓ *Compilation error?*  
-🔹 Ensure you have `gcc` and required libraries installed (`sudo apt install build-essential`).  
+ *Compilation error?*  
+ Ensure you have `gcc` and required libraries installed (`sudo apt install build-essential`).  
 
