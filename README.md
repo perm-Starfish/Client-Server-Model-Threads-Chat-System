@@ -91,7 +91,7 @@ For example, to connect as "Charlie":
 
 | Command | Description |
 | :------ | :---------- |
-| `chat \<username\> "\<message\>"` | Send a message to another user |
+| `chat <username> "<message>"` | Send a message to another user |
 | `bye` | Disconnect from the server |
 
 Example Conversation:
