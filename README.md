@@ -114,16 +114,6 @@ $ bye
 <User Bob is offline.>
 ```
 
-##  **Code Structure**
-
-```bash
-/chat-system
-│── server.c       # Server-side logic
-│── client.c       # Client-side logic
-│── Makefile       # Compilation script
-│── README.md      # Project documentation
-```
-
 ##  **Implementation Details**
 - **Server Side**
   - Uses **`socket()`** and **`bind()`** to create and listen for client connections.
