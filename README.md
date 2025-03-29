@@ -122,7 +122,6 @@ $ bye
 │── client.c       # Client-side logic
 │── Makefile       # Compilation script
 │── README.md      # Project documentation
-│── LICENSE        # License file
 ```
 
 ##  **Implementation Details**
