@@ -8,15 +8,14 @@
 #include <arpa/inet.h>
 
 #define MAX_CLIENTS 10
-#define MAX_NAME 50
+#define MAX_NAME 100
 #define MAX_MSG_LEN 1024
 #define BUFFER_SIZE 1024
 
 pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
 
 // define client information
-typedef struct
-{
+typedef struct {
     int socket;
     struct sockaddr_in address;
     char name[MAX_NAME];
@@ -34,28 +33,17 @@ void broadcast_message(const char *message)
     pthread_mutex_unlock(&mutex);
 }
 
-typedef struct mytm
+void print_time()
 {
-    int year; 
-    int month;
-    int day;
-    int hour;
-    int min;
-    int sec;
-} mytime;
-
-void print_time(void)
-{
-    time_t seconds = time(NULL);
-    struct tm *tm_ptr = localtime(&seconds);
-    mytime now;
+    time_t now;
+    struct tm *timeinfo;
+    char timebuffer[20]; // yyyy-mm-dd hh:mm:ss
     
-    now.year = tm_ptr->tm_year + 1900;
-    now.month = tm_ptr->tm_mon + 1;
-    now.day = tm_ptr->tm_mday;
-    now.hour = tm_ptr->tm_hour;
-    now.min = tm_ptr->tm_min;
-    now.sec = tm_ptr->tm_sec;
+    time(&now);
+    timeinfo = localtime(&now);
+    
+    strftime(timebuffer, sizeof(timebuffer), "%Y-%m-%d %H:%M:%S", timeinfo);
+    printf("[%s]\n", timebuffer);
 }
 
 void *handle_client(void *arg)
@@ -96,33 +84,38 @@ void *handle_client(void *arg)
                 char *message = message_start + 1;
 
                 pthread_mutex_lock(&mutex);
-                //int found = 0;
+                int found = 0;
                 for (int i = 0; i < MAX_CLIENTS; i++)
 				{
                     if (strcmp(clients[i].name, recipient) == 0)
 					{
+						found = 1;
 						if (clients[i].active)
 						{
-	                        char private_msg[MAX_MSG_LEN];
-	                        snprintf(private_msg, sizeof(private_msg), "<To %s> %s\n", client->name, message);
-	                        send(clients[i].socket, private_msg, strlen(private_msg), 0);
-	                        //found = 1;
+	                        char sender_msg[MAX_MSG_LEN];
+	                        snprintf(sender_msg, sizeof(sender_msg), "<To %s> %s\n", recipient, message);
+	                        send(client->socket, sender_msg, strlen(sender_msg), 0);
+	                        
+	                        char rcvr_msg[MAX_MSG_LEN];
+	                        snprintf(rcvr_msg, sizeof(rcvr_msg), "<From %s> %s\n", client->name, message);
+	                        send(clients[i].socket, rcvr_msg, strlen(rcvr_msg), 0);
+	                        
 	                        break;
 	                	}
 	                	else
 	                    {
-	                    	char offline[MAX_MSG_LEN];
-	                    	sprintf(offline, "<User %s is off-line.>\n", recipient);
-	                    	send(client->socket, offline, strlen(offline), 0);
+	                    	char offline_msg[MAX_MSG_LEN];
+	                    	sprintf(offline_msg, "<User %s is off-line.>\n", recipient);
+	                    	send(client->socket, offline_msg, strlen(offline_msg), 0);
 						}
 	                }
-	                else
-	                {
-	                	char dne[MAX_MSG_LEN];
-	                    sprintf(dne, "<User %s does not exist.>\n", recipient);
-	                    send(client->socket, dne, strlen(dne), 0);
-					}
                 }
+                if (!found)
+                {
+                	char dne_msg[MAX_MSG_LEN];
+	                sprintf(dne_msg, "<User %s does not exist.>\n", recipient);
+	                send(client->socket, dne_msg, strlen(dne_msg), 0);
+				}
                 pthread_mutex_unlock(&mutex);
             }
         }
