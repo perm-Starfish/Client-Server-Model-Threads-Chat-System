@@ -41,13 +41,6 @@ The system follows a **client-server** architecture:
 
 ---
 
-##  **Environment & Requirements**
-- **OS:** Linux / macOS (recommended), Windows (via WSL or MinGW)
-- **Compiler:** `gcc`
-- **Libraries:** `pthread`, `sys/socket.h`, `netinet/in.h`
-
----
-
 ##  **Installation & Usage**
 
 ### **1️⃣ Compile the Project**
