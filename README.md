@@ -9,12 +9,10 @@ This project implements a **multi-client chat system** using the **client-server
 ---
 
 ##  **Features**
-- Support **multiple clients** to connect to the server.  
-- **User login/logout notifications** for all online users.  
-- **Direct messaging** between clients via the server.  
-- **Shared whiteboard** for message exchange with synchronization (mutex).  
-- Implemented using **UNIX sockets (TCP) + Pthreads** for concurrent client handling.  
-- Simple command-line interface (CLI) for interaction.  
+- Multiple clients can connect to the server.
+- Clients can send messages to all users.
+- Clients can send private messages to specific users.
+- Users are notified when someone joins or leaves the chat.
 
 ---
 
@@ -87,37 +85,19 @@ For example, to connect as "Charlie":
 | `chat <username> "<message>"` | Send a message to another user |
 | `bye` | Disconnect from the server |
 
-Example Conversation:
-
-```sh
-(Alice connects)
-$ ./client 127.0.0.1 1234 Alice
-<User Alice is online.>
-
-(Bob connects)
-$ ./client 127.0.0.1 1234 Bob
-<User Bob is online.>
-
-(Alice sends a message)
-$ chat Bob "Hello Bob!"
-<To Bob> Hello Bob.
-
-(Bob leaves)
-$ bye
-<User Bob is offline.>
-```
-
 ##  **Implementation Details**
 - **Server Side**
-  - Uses **`socket()`** and **`bind()`** to create and listen for client connections.
-  - Spawns a **Pthread** for each client to handle requests.
-  - Uses a **shared memory (whiteboard)** for message exchange.
-  - Uses **mutex locks** to prevent race conditions.
+   - Creates a TCP socket and binds it to port.
+   - Listens for incoming connections.
+   - Accepts new clients and assigns them a slot.
+   - Handles client messages using separate threads.
+   - Supports broadcasting messages and private messaging.
+   - Uses **mutex locks** to prevent race conditions.
 
 - **Client Side**
   - Establishes a connection to the server using **`connect()`**.
-  - Reads and sends messages via **TCP sockets**.
-  - Listens for updates from the server.
+  - Starts a thread to receive messages.
+  - Can exit the chat by sending `bye`.
 
 ---
 
