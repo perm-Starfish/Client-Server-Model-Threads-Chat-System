@@ -63,6 +63,8 @@ void *handle_client(void *arg)
     client->name[bytes_received] = '\0';
 
     // broadcast new active user
+    print_time();
+    printf("User %s connected (%s/%i)\n\n", client->name, inet_ntoa(client->address.sin_addr), ntohs(client->address.sin_port));
     sprintf(buffer, "<User %s is on-line, socket address: %s/%i>\n",
             client->name, inet_ntoa(client->address.sin_addr), ntohs(client->address.sin_port));
     broadcast_message(buffer);
@@ -136,7 +138,7 @@ void *handle_client(void *arg)
     client->active = 0;
     sprintf(buffer, "<User %s is off-line.>\n", client->name);
     print_time();
-    printf("User %s is off-line.\n", client->name);
+    printf("User %s disconnected.\n", client->name);
     pthread_mutex_unlock(&mutex);
 
     broadcast_message(buffer);
