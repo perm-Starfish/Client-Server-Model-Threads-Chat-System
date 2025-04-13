@@ -43,7 +43,7 @@ void print_time()
     timeinfo = localtime(&now);
     
     strftime(timebuffer, sizeof(timebuffer), "%Y-%m-%d %H:%M:%S", timeinfo);
-    printf("[%s]\n", timebuffer);
+    printf("[%s] ", timebuffer);
 }
 
 void *handle_client(void *arg)
@@ -94,6 +94,13 @@ void *handle_client(void *arg)
 						{
 	                        char sender_msg[MAX_MSG_LEN];
 	                        snprintf(sender_msg, sizeof(sender_msg), "<To %s> %s\n", recipient, message);
+	                        print_time();
+	                        printf("%s is using the whiteboard.\n", client->name);
+	                        
+	                        // synchronization test
+	                        //sleep(10);
+	                        
+	                        printf("<To %s> %s\n", recipient, message);
 	                        send(client->socket, sender_msg, strlen(sender_msg), 0);
 	                        
 	                        char rcvr_msg[MAX_MSG_LEN];
@@ -128,6 +135,8 @@ void *handle_client(void *arg)
     pthread_mutex_lock(&mutex);
     client->active = 0;
     sprintf(buffer, "<User %s is off-line.>\n", client->name);
+    print_time();
+    printf("User %s is off-line.\n", client->name);
     pthread_mutex_unlock(&mutex);
 
     broadcast_message(buffer);
@@ -165,7 +174,7 @@ int main()
         return 1;
     }
 
-    printf("Server listening on port 1234...\n");
+    printf("Server listening on port 1234...\n\n");
 
     while (1)
 	{
