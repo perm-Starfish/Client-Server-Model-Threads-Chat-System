@@ -115,7 +115,8 @@ $ ./server
 [Time] Listening on port 1234...
 [Time] User Alice connected (192.168.1.10)
 [Time] User Bob connected (192.168.1.11)
-[Time] Alice is using the whiteboard. <To Bob> Hello Bob!
+[Time] Alice is using the whiteboard.
+<To Bob> Hello Bob!
 [Time] User Bob disconnected.
 
 Terminal 2 (Alice - Client):
