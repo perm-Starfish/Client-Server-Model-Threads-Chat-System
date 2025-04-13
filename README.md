@@ -63,19 +63,25 @@ By default, the server runs on port 1234.
 Start multiple clients to connect to the server:
 
 ```sh
-./client 127.0.0.1 1234 Alice
-./client 127.0.0.1 1234 Bob
+./client
 ```
-Each client should specify:
 
 ```sh
-./client <server_ip> <port> <username>
+connect 127.0.0.1 1234 Alice
+```
+```sh
+connect 127.0.0.1 1234 Bob
+```
+Different clients should be on different terminals, and each client should specify:
+
+```sh
+connect <server_ip> <port> <username>
 ```
 
 For example, to connect as "Charlie":
 
 ```sh
-./client 192.168.1.100 1234 Charlie
+connect 192.168.1.100 1234 Charlie
 ```
 
 ##  **Client Commands**
@@ -106,23 +112,24 @@ For example, to connect as "Charlie":
 ```pgsql
 Terminal 1 (Server):
 $ ./server
-[Server] Listening on port 1234...
-[Server] Alice connected (192.168.1.10)
-[Server] Bob connected (192.168.1.11)
-[Server] Message from Alice to Bob: "Hello Bob!"
-[Server] Bob disconnected.
+[Time] Listening on port 1234...
+[Time] User Alice connected (192.168.1.10)
+[Time] User Bob connected (192.168.1.11)
+[Time] Alice is using the whiteboard. <To Bob> Hello Bob!
+[Time] User Bob disconnected.
 
 Terminal 2 (Alice - Client):
-$ ./client 127.0.0.1 1234 Alice
+$ connect 127.0.0.1 1234 Alice
 <User Alice is online.>
 $ chat Bob "Hello Bob!"
-<To Bob> Hello Bob.
+<To Bob> Hello Bob!
+<User Bob is offline.>
 
 Terminal 3 (Bob - Client):
-$ ./client 127.0.0.1 1234 Bob
+$ connect 127.0.0.1 1234 Bob
 <User Bob is online.>
 (Alice sent a message)
-<Message from Alice: "Hello Bob!">
+<From Alice> Hello Bob!
 $ bye
 <User Bob is offline.>
 ```
